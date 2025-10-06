@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotePad</title>
+    <style>
+        .footer {
+        position: fixed;      
+        bottom: 0;
+        width: 100%;
+        display: flex; 
+        flex-wrap: wrap;      
+        gap: 10px;             
+        padding: 10px;
+        background: inherit;   
+        overflow: scroll;
+}
+        button {
+           padding: 10px 20px;
+           margin: 1em;
+        }
+        body {
+            background-color: black;
+            font: 1em sans-serif;
+        }
+        textarea {
+            font-size: medium;
+            vertical-align: middle;
+            align-self: center;
+            width: 50%;
+            height: 40vh;
+            box-sizing: border-box;
+            font: 1em monospace;
+            color: greenyellow;
+            background-color: black;
+            border: none;
+            padding: 1em;
+        }
+        h3 {
+            background-color: white;
+            display:block;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id = "Heading">Heading</h1>
+    <button id = "change-heading">Change Heading</button><button id = "change-bgclr">Change BackGround Colour</button><br>
+    <h1></h1>  
+    <textarea id = "text-box"></textarea><br>
+    <div class="footer">
+    <button id = "clear" , id = "button">Clear</button>
+    <button id = "capitalize" , id = "button">UpperCase</button>
+    <button id = "uncapitalize" , id = "button">LowerCase</button>
+    <button id = "copy" , id = "button">Copy</button>
+    <button id = "paste" , id = "button">Paste</button>
+    <button id = "change-mode" , id = "button">Change Mode</button>
+    <h3 id = "current-mode">Current Mode : Text</h3>
+    <button id = "solve" , id = "button">Solve</button>
+    <h5 id = "tip">Plus = + , Minus = - , Multiply = * , Divide = /</h5>
+    </div>
+<script>
+    const textBox = document.getElementById("text-box");
+    const clearBTN = document.getElementById("clear");
+    const capitalBTN = document.getElementById("capitalize");
+    const uncapitalBTN = document.getElementById("uncapitalize");
+    const copyBTN = document.getElementById("copy");
+    const pasteBTN = document.getElementById("paste");
+    const heading = document.getElementById("Heading");
+    const changeHeading = document.getElementById("change-heading");
+    const changeMode = document.getElementById("change-mode")
+    const cur_mode_txt = document.getElementById("current-mode")
+    const solve = document.getElementById("solve")
+    const changeBG = document.getElementById("change-bgclr")
+    const tip = document.getElementById("tip");
+    const storageKey = "savedText";
+
+    let copyText = "";
+    let text = "";
+    let mode = "text";
+    let value = window.prompt("Enter some text for the heading;");
+    let color = window.prompt("Enter a color for the background (e.g., red, blue, green):")
+    solve.style.visibility = "hidden";
+    tip.style.visibility = "hidden";
+    tip.style.alignContent = "right";
+    color = color.toLowerCase();
+    document.body.style.backgroundColor = color;
+    heading.textContent = value;
+
+    window.onload = function() {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        textBox.value = saved;
+      }
+    };
+    textBox.addEventListener("input", function() {
+      localStorage.setItem(storageKey, textBox.value);
+    });
+    uncapitalBTN.onclick = function() {
+        textBox.value = textBox.value.toLowerCase();
+    }
+    uncapitalBTN.onpointerenter = function() {
+        uncapitalBTN.style.backgroundColor = "gray";
+            }
+    uncapitalBTN.onpointerleave = function() {
+        uncapitalBTN.style.backgroundColor = "white";
+            }
+    capitalBTN.onclick = function() {
+        textBox.value = textBox.value.toUpperCase();
+    }
+    capitalBTN.onpointerenter = function() {
+        capitalBTN.style.backgroundColor = "gray";
+            }
+    capitalBTN.onpointerleave = function() {
+        capitalBTN.style.backgroundColor = "white";
+            }
+    clearBTN.onclick = function() {
+        textBox.value = "";
+    }
+    clearBTN.onpointerenter = function() {
+        clearBTN.style.backgroundColor = "gray";
+            }
+    clearBTN.onpointerleave = function() {
+        clearBTN.style.backgroundColor = "white";
+            }
+    copyBTN.onclick = function() {
+        copyText = textBox.value;
+    }
+    copyBTN.onpointerenter = function() {
+        copyBTN.style.backgroundColor = "gray";
+            }
+    copyBTN.onpointerleave = function() {
+        copyBTN.style.backgroundColor = "white";
+            }
+    pasteBTN.onclick = function() {
+        textBox.value = textBox.value + copyText;
+        }
+    pasteBTN.onpointerenter = function() {
+        pasteBTN.style.backgroundColor = "gray";
+            }
+    pasteBTN.onpointerleave = function() {
+        pasteBTN.style.backgroundColor = "white";
+            }
+    changeHeading.onclick = function() {
+        heading.textContent = window.prompt("Enter new heading text:");
+        }
+    changeHeading.onpointerenter = function() {
+        changeHeading.style.backgroundColor = "gray";
+            }
+    changeHeading.onpointerleave = function() {
+        changeHeading.style.backgroundColor = "white";
+            }
+    changeMode.onclick = function() {
+        if (mode == "text") {
+            mode = "math";
+            text = textBox.value;
+            tip.style.visibility = "visible";
+            textBox.value = "";
+            cur_mode_txt.textContent = "Current Mode : Math";
+            solve.style.visibility = "visible";
+        } else {
+            mode = "text";
+            tip.style.visibility = "hidden";
+            textBox.value = text;
+            cur_mode_txt.textContent = "Current Mode : Text";
+            solve.style.visibility = "hidden";
+        }
+        }
+    changeMode.onpointerenter = function() {
+        changeMode.style.backgroundColor = "gray";
+            }
+    changeMode.onpointerleave = function() {
+        changeMode.style.backgroundColor = "white";
+            }
+    solve.onclick = function() {
+        let eq = textBox.value
+        textBox.value = eval(eq);
+        }
+    solve.onpointerenter = function() {
+        solve.style.backgroundColor = "gray";
+            }
+    solve.onpointerleave = function() {
+        solve.style.backgroundColor = "white";
+            }
+    changeBG.onclick = function() {
+        let newCLR = window.prompt("Enter a new color for the background (e.g., red, blue, green):");
+        newCLR = newCLR.toLowerCase()
+        document.body.style.backgroundColor = newCLR;
+        }
+    changeBG.onpointerenter = function() {
+        changeBG.style.backgroundColor = "gray";
+            }
+    changeBG.onpointerleave = function() {
+        changeBG.style.backgroundColor = "white";
+            }
+</script>
+</body>
+</html>
