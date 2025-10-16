@@ -97,7 +97,7 @@
     window.addEventListener("beforeunload", function() {
         text = textBox.value;
         localStorage.setItem(storageKey, text);
-    }
+    });
     uncapitalBTN.onclick = function() {
         textBox.value = textBox.value.toLowerCase();
     }
@@ -198,5 +198,6 @@
 </script>
 </body>
 </html>
+
 
 
