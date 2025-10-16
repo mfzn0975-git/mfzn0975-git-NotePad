@@ -94,9 +94,10 @@
         textBox.value = saved;
       }
     };
-    textBox.addEventListener("input", function() {
-      localStorage.setItem(storageKey, textBox.value);
-    });
+    window.addEventListener("beforeunload", function() {
+        text = textBox.value;
+        localStorage.setItem(storageKey, text);
+    }
     uncapitalBTN.onclick = function() {
         textBox.value = textBox.value.toLowerCase();
     }
@@ -197,4 +198,5 @@
 </script>
 </body>
 </html>
+
 
