@@ -94,11 +94,13 @@
         textBox.value = saved;
       }
     };
-    textBox.addEventListener("input", () => {
-       localStorage.setItem(storageKey, text);
-    });
     window.addEventListener("beforeunload", function() {
-        localStorage.setItem(storageKey, text);
+        if (mode == "text") {
+            localStorage.setItem(storageKey, textBox.textContent);
+        }
+        if (mode == "math") {
+            localStorage.setItem(storageKey, text);
+        }
     });
     uncapitalBTN.onclick = function() {
         textBox.value = textBox.value.toLowerCase();
@@ -200,6 +202,7 @@
 </script>
 </body>
 </html>
+
 
 
 
