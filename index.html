@@ -96,7 +96,7 @@
     };
     window.addEventListener("beforeunload", function() {
         if (mode == "text") {
-            localStorage.setItem(storageKey, textBox.textContent);
+            localStorage.setItem(storageKey, textBox.value);
         }
         if (mode == "math") {
             localStorage.setItem(storageKey, text);
@@ -202,6 +202,7 @@
 </script>
 </body>
 </html>
+
 
 
 
